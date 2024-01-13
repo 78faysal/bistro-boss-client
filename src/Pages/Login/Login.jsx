@@ -12,7 +12,7 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
-  const { signIn } = useContext(AuthContext);
+  const { user, signIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,7 +21,10 @@ const Login = () => {
 
   useEffect(() => {
     loadCaptchaEnginge(6);
-  }, []);
+    if(user){
+      navigate(from, { replace: true });
+    }
+  }, [user, from, navigate]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -51,7 +54,6 @@ const Login = () => {
           `,
         },
       });
-      navigate(from, { replace: true });
     });
   };
 
@@ -119,13 +121,13 @@ const Login = () => {
                   placeholder="captcha"
                   name="captcha"
                   className="input input-bordered"
-                  onBlur={handleValidateCaptcha}
-                  required
+                  // onBlur={handleValidateCaptcha}
+                  // required
                 />
               </div>
               <div className="form-control mt-6">
                 <input
-                  disabled={disabled}
+                  // disabled={disabled}
                   className="btn btn-primary"
                   type="submit"
                   value="Login"

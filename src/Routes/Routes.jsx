@@ -14,6 +14,10 @@ import AddItems from "../Pages/Dashboard/AddItems/AddItems";
 import AdminRoute from "./AdminRoute";
 import ManageItems from "../Pages/Dashboard/ManageItems/ManageItems";
 import UpdateItem from "../Pages/Dashboard/UpdateItem/UpdateItem";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory/PaymentHistory";
+import UserHome from "../Pages/Dashboard/UserHome/UserHome";
+import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
 
 export const router = createBrowserRouter([
   {
@@ -58,31 +62,63 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      // normal user routes 
+      // normal user routes
+      {
+        path: "userHome",
+        element: <UserHome />,
+      },
       {
         path: "cart",
         element: <Cart />,
       },
+      {
+        path: "payment",
+        element: <Payment />,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory />,
+      },
 
       //   admin routes
       {
-        path: 'addItems', 
-        element: <AdminRoute><AddItems /></AdminRoute>
+        path: 'adminHome',
+        element: <AdminRoute><AdminHome /></AdminRoute>
       },
       {
-        path: 'manageItems',
-        element: <AdminRoute><ManageItems /></AdminRoute>
+        path: "addItems",
+        element: (
+          <AdminRoute>
+            <AddItems />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manageItems",
+        element: (
+          <AdminRoute>
+            <ManageItems />
+          </AdminRoute>
+        ),
       },
       {
         path: `updateItem/:id`,
-        element: <AdminRoute><UpdateItem /></AdminRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+        element: (
+          <AdminRoute>
+            <UpdateItem />
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/menu/${params.id}`),
       },
       {
         path: "users",
-        element: <AdminRoute><AllUsers /></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
       },
-
     ],
   },
 ]);
